@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Is your invention really new? An interactive patent guide</title>
+<style>
+:root{--bg:#F6F4EF;--ink:#18181B;--mut:#76766F;--soft:#E8E4DA;--tint:#F6D9CF;--acc:#D9573B;--card:#fff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#18181B;--ink:#F6F4EF;--mut:#9A9A94;--soft:#2A2A2F;--tint:#4a2a21;--card:#222226;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#18181B;--ink:#F6F4EF;--mut:#9A9A94;--soft:#2A2A2F;--tint:#4a2a21;--card:#222226;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;line-height:1.5}
+main{max-width:860px;margin:0 auto;padding:0 22px}
+section{padding:72px 0 24px}
+.tag{display:inline-block;background:var(--acc);color:#fff;font-weight:700;font-size:12px;letter-spacing:.08em;padding:7px 14px;border-radius:99px;text-transform:uppercase}
+h1{font-size:clamp(46px,11vw,96px);line-height:1;margin:18px 0;letter-spacing:-.02em}
+h2{font-size:clamp(30px,6vw,48px);line-height:1.08;margin:14px 0 10px;letter-spacing:-.01em}
+em{font-style:normal;color:var(--acc)}
+p.lead{color:var(--mut);font-size:19px;max-width:560px;margin:0 0 26px}
+.hero{padding-top:56px;position:relative}
+.lens{position:absolute;right:0;top:70px;width:clamp(90px,22vw,170px);aspect-ratio:1;border:clamp(10px,2.4vw,18px) solid var(--acc);border-radius:50%;animation:float 4s ease-in-out infinite}
+.lens:after{content:"";position:absolute;width:48%;height:clamp(10px,2.4vw,18px);background:var(--acc);border-radius:9px;right:-34%;bottom:-8%;transform:rotate(45deg);transform-origin:left center}
+@keyframes float{50%{transform:translate(-8px,10px) rotate(-4deg)}}
+.btn{font:inherit;font-weight:700;border:2px solid var(--ink);background:transparent;color:var(--ink);padding:12px 20px;border-radius:99px;cursor:pointer;transition:.18s}
+.btn:hover{transform:translateY(-2px)}
+.btn.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn.ink.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 22px}
+.q{font-weight:700;font-size:18px;margin:22px 0 4px}
+.grid{display:grid;grid-template-columns:auto 1fr 1fr;gap:10px;align-items:stretch;margin-top:26px}
+.ch{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--mut);align-self:center}
+.cell{background:var(--soft);border-radius:18px;padding:18px;min-height:130px;opacity:.45;transition:.35s;transform:scale(.97)}
+.cell b{display:block;font-size:22px;margin-bottom:4px}
+.cell span{font-size:14px;color:var(--mut)}
+.cell.hit{opacity:1;transform:scale(1);background:var(--acc);color:#fff}
+.cell.hit span{color:#fff}
+.cell.hit.dk{background:var(--ink);color:var(--bg)}
+.cell.hit.dk span{color:var(--bg)}
+.verdict{margin-top:18px;padding:18px 20px;border-left:6px solid var(--acc);background:var(--card);border-radius:0 14px 14px 0;font-size:17px;min-height:64px}
+.hay{display:grid;grid-template-columns:repeat(10,1fr);gap:8px;margin:20px 0;max-width:520px}
+.dot{aspect-ratio:1;border-radius:50%;background:var(--soft);transition:.4s}
+.dot.p{background:var(--ink);transform:scale(1.1)}
+.dot.t{background:var(--acc);transform:scale(1.2)}
+.stat{display:flex;gap:26px;flex-wrap:wrap;font-weight:700}
+.stat i{font-style:normal;font-size:40px;display:block;line-height:1}
+.doc{background:var(--card);border-radius:20px;padding:24px;margin-top:8px}
+.doc h4{margin:0 0 6px;font-size:12px;letter-spacing:.1em;color:var(--mut)}
+.doc .abs{transition:.3s}
+.doc .clm{margin-top:16px;padding:16px;border-radius:14px;background:var(--soft);transition:.3s}
+.doc.cl .abs{opacity:.35;filter:blur(1.5px)}
+.doc.cl .clm{background:var(--tint);outline:3px solid var(--acc)}
+.doc.cl .clm h4{color:var(--acc)}
+.bar{display:flex;gap:6px;margin:18px 0}
+.seg{flex:var(--w);height:44px;border:0;border-radius:99px;background:var(--ink);color:var(--bg);font:inherit;font-weight:700;cursor:pointer;opacity:.4;transition:.25s}
+.seg.on{opacity:1;background:var(--acc);color:#fff;transform:scaleY(1.15)}
+.step{background:var(--card);border-radius:20px;padding:24px;min-height:150px}
+.step h3{margin:0 0 6px;font-size:28px}
+.step .t{font-weight:700;color:var(--acc)}
+.final{margin:72px 0 40px;background:var(--acc);color:#fff;border-radius:28px;padding:36px 28px}
+.final h2{margin-top:0}
+.final .ask{background:#fff;color:#18181B;border-radius:18px;padding:20px;font-weight:700;font-size:20px;margin:20px 0}
+.note{font-size:14px;opacity:.9}
+footer{padding:10px 0 50px;color:var(--mut);font-size:14px}
+@media (max-width:520px){.grid{grid-template-columns:1fr 1fr}.grid .ch:first-child{display:none}.rowlab{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<main>
+
+<section class="hero">
+  <div class="lens" aria-hidden="true"></div>
+  <span class="tag">Patents 101 &middot; Interactive</span>
+  <h1>Is your invention really <em>new?</em></h1>
+  <p class="lead">Two simple checks can save you months of work. Try them below. Everything here is clickable.</p>
+  <a class="btn on" href="#check" style="text-decoration:none;display:inline-block">Start exploring</a>
+</section>
+
+<section id="check">
+  <span class="tag">Try it</span>
+  <h2>Two questions decide your <em>next move</em></h2>
+  <p class="lead">Think of an idea you’re working on. Answer honestly and watch the board.</p>
+  <div class="q">1. Has someone already published or patented this idea?</div>
+  <div class="row" id="q1"><button class="btn" data-v="new">Not that I can find</button><button class="btn" data-v="old">Yes, something similar exists</button></div>
+  <div class="q">2. Does someone’s patent claim cover what you’d build?</div>
+  <div class="row" id="q2"><button class="btn" data-v="free">No</button><button class="btn" data-v="blocked">Yes, or maybe</button></div>
+  <div class="grid">
+    <span></span><span class="ch">FREE TO USE</span><span class="ch">BLOCKED</span>
+    <span class="ch rowlab">NEW</span>
+    <div class="cell" id="new-free"><b>Build it</b><span>New and clear. A strong position.</span></div>
+    <div class="cell" id="new-blocked"><b>Negotiate</b><span>Yours to patent, but you may need a license.</span></div>
+    <span class="ch rowlab">NOT NEW</span>
+    <div class="cell" id="old-free"><b>Use freely</b><span>Not patentable, but free to use.</span></div>
+    <div class="cell dk" id="old-blocked"><b>Rethink</b><span>Not new and blocked. Change direction.</span></div>
+  </div>
+  <div class="verdict" id="verdict">Answer both questions to see where you land.</div>
+  <p style="color:var(--mut);font-size:14px">Question 1 is a <b>prior-art search</b>. Question 2 is a <b>Freedom-to-Operate (FTO)</b> check. They are different questions.</p>
+</section>
+
+<section>
+  <span class="tag">Where ideas hide</span>
+  <h2>Papers show <em>some</em> of the picture</h2>
+  <p class="lead">Each dot is a document about your topic. Tap a search and see what it finds. This is an illustration, not real data.</p>
+  <div class="row"><button class="btn ink" id="sp">Search papers</button><button class="btn" id="st">Search patents</button><button class="btn" id="sr" style="border-color:var(--mut);color:var(--mut)">Reset</button></div>
+  <div class="hay" id="hay"></div>
+  <div class="stat"><div><i id="cp">0</i>from papers</div><div style="color:var(--acc)"><i id="ct">0</i>extra from patents</div></div>
+  <p id="haymsg" style="color:var(--mut)">Tip: search both. Many inventions appear in patents but never in journals.</p>
+</section>
+
+<section>
+  <span class="tag">Tip 2</span>
+  <h2>Read the <em>claims</em>, not just the abstract</h2>
+  <p class="lead">An invented example. Flip the switch to see what actually counts.</p>
+  <div class="row"><button class="btn ink on" id="v1">What it sounds like</button><button class="btn" id="v2">What it protects</button></div>
+  <div class="doc" id="doc">
+    <div class="abs"><h4>ABSTRACT</h4>A coating that improves how a sensor responds to chemicals in the air, with many possible uses.</div>
+    <div class="clm"><h4>CLAIM 1: WHAT IS ACTUALLY PROTECTED</h4>A sensor comprising a silicon layer having a gap of less than 20 nanometres, and a coating applied within said gap, wherein the coating binds a target molecule.</div>
+  </div>
+  <p style="color:var(--mut)" id="docmsg">The abstract is broad and friendly. The claim is narrow and exact.</p>
+</section>
+
+<section>
+  <span class="tag">5 minutes</span>
+  <h2>How to read a patent, <em>step by step</em></h2>
+  <p class="lead">Bar width shows how long each step takes. Tap a step.</p>
+  <div class="bar" id="bar"></div>
+  <div class="step" id="step"></div>
+  <div class="row" style="margin-top:14px"><button class="btn" id="prev">Back</button><button class="btn on" id="next">Next step</button></div>
+</section>
+
+<div class="final">
+  <h2>A few hours now can save months later.</h2>
+  <div class="ask">When should researchers start thinking about IP?</div>
+  <p class="note">Tell me in the comments. Whether something infringes a patent is a legal question for a patent attorney.</p>
+</div>
+
+<footer><b style="color:var(--ink)">Khushboo Soni</b><br>Research &amp; Technology | Patent &amp; IP Research</footer>
+</main>
+
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)};
+var q={a:null,b:null};
+var msg={
+ "new-free":"Strong position. Your idea looks new and nothing blocks you. Move ahead, and keep your records.",
+ "new-blocked":"The idea is yours, but someone else’s claims may cover the product. Look at licensing or a design-around.",
+ "old-free":"You probably can’t patent it, but you can use it. It may still make a good product.",
+ "old-blocked":"Not new and blocked. Time to change direction, and it’s better to learn that now than after a prototype."
+};
+function pick(id,key,btn){
+  document.querySelectorAll("#"+id+" .btn").forEach(function(b){b.classList.remove("on")});
+  btn.classList.add("on"); q[key]=btn.dataset.v; board();
+}
+function board(){
+  document.querySelectorAll(".cell").forEach(function(c){c.classList.remove("hit")});
+  if(q.a&&q.b){var k=q.a+"-"+q.b;$("#"+k).classList.add("hit");$("#verdict").textContent=msg[k];}
+  else $("#verdict").textContent="Answer both questions to see where you land.";
+}
+document.querySelectorAll("#q1 .btn").forEach(function(b){b.onclick=function(){pick("q1","a",b)}});
+document.querySelectorAll("#q2 .btn").forEach(function(b){b.onclick=function(){pick("q2","b",b)}});
+
+var hay=$("#hay"),dots=[],papers=[3,8,14,22,31,47,56,71],pats=[5,12,27,38,44,63,79,88];
+for(var i=0;i<100;i++){var d=document.createElement("div");d.className="dot";hay.appendChild(d);dots.push(d)}
+var np=0,nt=0;
+function lit(list,cls,delay){list.forEach(function(ix,n){setTimeout(function(){dots[ix].classList.add(cls)},n*delay)})}
+$("#sp").onclick=function(){if(np)return;np=8;lit(papers,"p",70);$("#cp").textContent=8;note()};
+$("#st").onclick=function(){if(nt)return;nt=8;lit(pats,"t",70);$("#ct").textContent=8;note()};
+$("#sr").onclick=function(){dots.forEach(function(d){d.className="dot"});np=nt=0;$("#cp").textContent=0;$("#ct").textContent=0;note()};
+function note(){$("#haymsg").textContent=np&&nt?"Together they gave the fuller picture. Search both.":nt?"Patents found results that papers would have missed.":np?"Papers found some. Now try patents.":"Tip: search both. Many inventions appear in patents but never in journals."}
+
+function setDoc(c){$("#doc").classList.toggle("cl",c);$("#v1").classList.toggle("on",!c);$("#v2").classList.toggle("on",c);
+  $("#docmsg").textContent=c?"The claim is what the law protects. Read it slowly.":"The abstract is broad and friendly. The claim is narrow and exact."}
+$("#v1").onclick=function(){setDoc(false)};$("#v2").onclick=function(){setDoc(true)};
+
+var steps=[
+ ["Title and abstract",30,"Is this even relevant to your topic? Decide fast."],
+ ["Figures",60,"Diagrams often explain the invention faster than the text."],
+ ["Claim 1",120,"The most important part. Claims define what is legally protected. Read the first independent claim slowly."],
+ ["Owner and dates",30,"Who owns it? When was it filed? Check the legal status: it may be expired or abandoned."],
+ ["Citations and family",60,"They point to related patents and earlier work. Great for finding more sources."]
+],cur=2;
+var bar=$("#bar");
+steps.forEach(function(s,i){var b=document.createElement("button");b.className="seg";b.style.setProperty("--w",s[1]);b.textContent=i+1;b.onclick=function(){show(i)};bar.appendChild(b)});
+function fmt(s){return Math.floor(s/60)+":"+("0"+s%60).slice(-2)}
+function show(i){cur=i;[].forEach.call(bar.children,function(b,n){b.classList.toggle("on",n===i)});
+  var s=steps[i];$("#step").innerHTML="<div class=t>Step "+(i+1)+" of 5 &middot; "+fmt(s[1])+" min</div><h3>"+s[0]+"</h3><p>"+s[2]+"</p>"}
+$("#next").onclick=function(){show((cur+1)%5)};$("#prev").onclick=function(){show((cur+4)%5)};
+show(0);
+})();
+</script>
+</body>
+</html>
